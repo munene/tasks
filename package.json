@@ -1,0 +1,11 @@
+{
+  "name": "tasks-api",
+  "version": "1.0.0",
+  "description": "Tasks API for Vantik",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Munene Kabogo",
+  "license": "ISC"
+}
