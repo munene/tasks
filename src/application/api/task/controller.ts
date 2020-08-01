@@ -1,22 +1,39 @@
-import * as Hapi from 'hapi';
-import { ICreateTaskRequest, ITaskByIdRequest, IUpdateTaskRequest } from "../../interfaces/api/taskInterfaces";
-import { IRepository } from '../../interfaces/persistence/repository.interface';
-import { Task } from '../../../persistence/models/task.model';
+import {
+  ICreateTaskRequest,
+  ITaskByIdRequest,
+  IUpdateTaskRequest,
+} from '../../interfaces/api/taskInterfaces';
+import {IRepository} from '../../interfaces/persistence/repository.interface';
+import {Task} from '../../../persistence/models/task.model';
 
+/**
+ * The list of task related methods to be
+ * exposed by the API
+ * @class TaskController
+ */
 export class TaskController {
   repository: IRepository;
 
+  /**
+   * Initialize the task controller
+   * @param  {IRepository} repository: The repository to be used
+   */
   constructor(repository: IRepository) {
     this.repository = repository;
   }
-  async createTask(request: ICreateTaskRequest, h: Hapi.ResponseToolkit) {
+
+  /**
+   * Creates a task in the specified repository
+   * @param  {ICreateTaskRequest} request: Request with Task payload data
+   * @return {Boom | Task} A server error or the task created
+   */
+  async createTask(request: ICreateTaskRequest) {
     const payload = request.payload;
     const taskToBeCreated: Task = {
       title: payload.title,
       description: payload.description,
-      due_date: payload.due_date,
-      creation_date: new Date(),
-    }
+      due_date: payload.dueDate,
+    };
 
     try {
       const createdTask = await this.repository.createNewTask(taskToBeCreated);
@@ -26,7 +43,12 @@ export class TaskController {
     }
   }
 
-  async getTaskById(request: ITaskByIdRequest, h: Hapi.ResponseToolkit) {
+  /**
+   * Gets the data of the task id requested from the repository
+   * @param  {ITaskByIdRequest} request: Request with an id param
+   * @return {Boom | Task} A server error or the task requested
+   */
+  async getTaskById(request: ITaskByIdRequest) {
     try {
       const id = request.params.id;
 
@@ -37,7 +59,11 @@ export class TaskController {
     }
   }
 
-  async getAllTasks(request: Hapi.RequestOrig, h: Hapi.ResponseToolkit) {
+  /**
+   * Get all the tasks from the repository
+   * @return {Boom | Task[]} A server error or the list of tasks
+   */
+  async getAllTasks() {
     try {
       const tasks = await this.repository.getAllTasks();
       return tasks;
@@ -46,7 +72,13 @@ export class TaskController {
     }
   }
 
-  async updateTask(request: IUpdateTaskRequest, h: Hapi.ResponseToolkit) {
+  /**
+   * Update a task
+   * @param  {IUpdateTaskRequest} request: Request with the task id
+   * and the data to update
+   * @return {Boom | Task} a server error or the updated task
+   */
+  async updateTask(request: IUpdateTaskRequest) {
     const payload = request.payload;
     const taskId = request.params.id;
     try {
@@ -58,21 +90,32 @@ export class TaskController {
     }
   }
 
-  async executeTask(request: ITaskByIdRequest, h: Hapi.ResponseToolkit) {
+  /**
+   * Mark a task as executed in the repository
+   * @param  {ITaskByIdRequest} request: Request with the task id
+   * @return {Boom | Task} a server error or the executed task
+   */
+  async executeTask(request: ITaskByIdRequest) {
     try {
       const id = request.params.id;
-      const task = await this.repository.getTask(id);
-      const updatedTask = await this.repository.updateTask(id, { executed_on: new Date() });
+      const updatedTask = await this.repository.updateTask(id, {
+        executed_on: new Date(),
+      });
       return updatedTask;
     } catch (error) {
       return error;
     }
   }
 
-  async deleteTask(request: ITaskByIdRequest, h: Hapi.ResponseToolkit) {
+  /**
+   * Delete a task from the repository
+   * @param  {ITaskByIdRequest} request: Request with the task id
+   * @return {Boom | Task} a server error or the deleted task
+   */
+  async deleteTask(request: ITaskByIdRequest) {
     const taskId = request.params.id;
     try {
-      const isSuccessful = await this.repository.deleteTask(taskId);
+      await this.repository.deleteTask(taskId);
       return {
         message: 'Task deleted successfully',
       };

@@ -4,7 +4,7 @@ export interface ICreateTaskRequest extends Hapi.RequestOrig {
   payload: {
     title: string,
     description: string,
-    due_date: Date,
+    dueDate: Date,
   };
 }
 

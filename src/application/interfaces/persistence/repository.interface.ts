@@ -1,4 +1,4 @@
-import { Task } from "../../../persistence/models/task.model";
+import {Task} from '../../../persistence/models/task.model';
 
 export interface IRepository {
   createNewTask(newTask: Partial<Task>): Promise<Task>;

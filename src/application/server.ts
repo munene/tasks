@@ -17,17 +17,17 @@ export const manifest = {
               {
                 module: '@hapi/good-squeeze',
                 name: 'Squeeze',
-                args: [{ log: '*', response: '*', error: '*' }],
+                args: [{log: '*', response: '*', error: '*'}],
               },
               {
                 module: '@hapi/good-console',
-                args: [{ format: 'YYYY-MM-DDTHH:mm:ss.SSS' }],
+                args: [{format: 'YYYY-MM-DDTHH:mm:ss.SSS'}],
               },
               'stdout',
             ],
           },
         },
-      }
+      },
     ],
   },
 };

@@ -4,6 +4,7 @@
   "description": "Tasks API for Vantik",
   "main": "index.js",
   "scripts": {
+    "compile": "tsc -p .",
     "start": "node ./dist/src/application/index.js",
     "dev": "nodemon ./src/application/index.ts",
     "test": "jest --runInBand --detectOpenHandles",
@@ -21,12 +22,19 @@
     "@hapi/joi": "^17.1.1",
     "@types/hapi": "^18.0.3",
     "boom": "^7.3.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "eslint-plugin-typescript": "^0.14.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.8",
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "@typescript-eslint/parser": "^3.7.1",
+    "eslint": "^7.6.0",
+    "eslint-config-google": "^0.14.0",
+    "gts": "^2.0.2",
     "jest": "^26.2.2",
     "nodemon": "^2.0.4",
+    "ts-jest": "^26.1.4",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   }
