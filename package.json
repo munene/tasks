@@ -16,6 +16,8 @@
     "@hapi/good-squeeze": "^6.0.0",
     "@hapi/hapi": "^19.2.0",
     "@hapi/joi": "^17.1.1",
+    "@types/hapi": "^18.0.3",
+    "boom": "^7.3.0",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
