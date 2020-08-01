@@ -1,8 +1,8 @@
 export class Task {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   due_date: Date;
-  executed_on: Date;
+  executed_on?: Date;
   creation_date: Date;
 }

@@ -2,7 +2,7 @@ import { IRepository } from "../../application/interfaces/persistence/repository
 import { Task } from "../models/task.model";
 
 export class InMemoryRepository implements IRepository {
-  createNewTask(): Promise<Task> {
+  createNewTask(newTask: Partial<Task>): Promise<Task> {
     throw new Error("Method not implemented.");
   }
   getTask(id: number): Promise<Task> {
