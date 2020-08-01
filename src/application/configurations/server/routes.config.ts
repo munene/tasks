@@ -1,6 +1,6 @@
-import Hapi from 'hapi';
+import * as Hapi from 'hapi';
 import { IRepository } from '../../interfaces/persistence/repository.interface';
-import TaskRoutes from '../../api/task/routes';
+import * as TaskRoutes from '../../api/task/routes';
 /**
  * Register the API's routesz
  * @param  {Hapi.Server} server: The already configured server
@@ -8,5 +8,5 @@ import TaskRoutes from '../../api/task/routes';
  */
 export const registerRoutes = async (server: Hapi.Server, repository: IRepository) => {
   // Register the task routes
-  TaskRoutes(server, repository); 
+  TaskRoutes.register(server, repository);
 }

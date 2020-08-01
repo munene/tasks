@@ -1,11 +1,11 @@
-import { manifest, options } from "./interfaces/server";
-import Hapi from 'hapi';
+import { manifest, options } from "./server";
+import * as Hapi from 'hapi';
 import { IRepository } from "./interfaces/persistence/repository.interface";
 import { registerRoutes } from "./configurations/server/routes.config";
 import { initializeRepository } from "./configurations/server/repository.config";
+import * as glue from '@hapi/glue';
 
 require('dotenv').config();
-const glue = require('glue');
 
 const startServer = async () => {
   try {
@@ -13,7 +13,7 @@ const startServer = async () => {
 
     // Initialize the database repository
     const repository: IRepository = await initializeRepository();
-  
+
     // Register the API routes
     await registerRoutes(server, repository);
 
@@ -25,3 +25,5 @@ const startServer = async () => {
     process.exit(1);
   }
 };
+
+startServer();

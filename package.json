@@ -4,7 +4,10 @@
   "description": "Tasks API for Vantik",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "start": "node ./dist/src/application/index.js",
+    "dev": "nodemon ./src/application/index.ts",
+    "test": "jest --runInBand --detectOpenHandles",
+    "prepare": "yarn run compile"
   },
   "author": "Munene Kabogo",
   "license": "ISC",
@@ -23,6 +26,8 @@
   "devDependencies": {
     "@types/jest": "^26.0.8",
     "jest": "^26.2.2",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   }
 }

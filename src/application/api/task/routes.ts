@@ -1,9 +1,9 @@
-import Hapi from 'hapi';
+import * as Hapi from 'hapi';
 import { TaskController } from './controller';
 import { IRepository } from '../../interfaces/persistence/repository.interface';
 import { createTaskValidator, requestByIdValidator, updateTaskValidator } from './validation';
 
-export = (server: Hapi.Server, repository: IRepository) => {
+export const register = (server: Hapi.Server, repository: IRepository) => {
   const taskController = new TaskController(repository);
 
   server.route({

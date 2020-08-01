@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import * as Joi from '@hapi/joi';
 
 // These are the required initial fields of a task
 export const createTaskValidator = Joi.object().keys({

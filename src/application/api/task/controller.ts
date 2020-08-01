@@ -1,7 +1,6 @@
-import Hapi from 'hapi';
+import * as Hapi from 'hapi';
 import { ICreateTaskRequest, ITaskByIdRequest, IUpdateTaskRequest } from "../../interfaces/api/taskInterfaces";
 import { IRepository } from '../../interfaces/persistence/repository.interface';
-import Boom from 'boom';
 import { Task } from '../../../persistence/models/task.model';
 
 export class TaskController {

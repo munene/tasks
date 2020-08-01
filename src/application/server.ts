@@ -10,17 +10,17 @@ export const manifest = {
     plugins: [
       // Logging
       {
-        plugin: require('good'),
+        plugin: require('@hapi/good'),
         options: {
           reporters: {
             consoleReporter: [
               {
-                module: 'good-squeeze',
+                module: '@hapi/good-squeeze',
                 name: 'Squeeze',
                 args: [{ log: '*', response: '*', error: '*' }],
               },
               {
-                module: 'good-console',
+                module: '@hapi/good-console',
                 args: [{ format: 'YYYY-MM-DDTHH:mm:ss.SSS' }],
               },
               'stdout',
