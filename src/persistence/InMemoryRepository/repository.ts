@@ -92,7 +92,7 @@ export class InMemoryRepository implements RepositoryInterface {
    */
   deleteTask(id: number): Promise<boolean> {
     return new Promise((resolve) => {
-      this.tasks = this.tasks.filter((task) => task.id === id);
+      this.tasks = this.tasks.filter((task) => task.id !== id);
       resolve(true);
     });
   }
