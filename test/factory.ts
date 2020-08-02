@@ -4,14 +4,11 @@ import {
   registerRoutes,
 } from '../src/application/configurations/server/routes.config';
 import {
-  InMemoryRepository,
-} from '../src/persistence/InMemoryRepository/repository';
+  RepositoryInterface,
+} from '../src/application/interfaces/persistence/repository.interface';
 
-export const setUpServer = async () => {
+export const setUpServer = async (repository: RepositoryInterface) => {
   const server = await compose(manifest, options);
-
-  // Initialize the database repository
-  const repository = new InMemoryRepository();
 
   // Register the API routes
   await registerRoutes(server, repository);

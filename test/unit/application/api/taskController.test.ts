@@ -15,7 +15,6 @@ describe('task controller', async () => {
 
   beforeEach(() => {
     repository = new InMemoryRepository();
-    // server = await setUpServer();
     controller = new TaskController(repository);
   });
 

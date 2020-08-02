@@ -8,7 +8,8 @@
     "start": "node ./dist/src/application/index.js",
     "dev": "nodemon ./src/application/index.ts",
     "test": "jest --runInBand --detectOpenHandles",
-    "prepare": "yarn run compile"
+    "prepare": "yarn run compile",
+    "pretest": "gts check"
   },
   "author": "Munene Kabogo",
   "license": "ISC",

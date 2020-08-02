@@ -8,20 +8,20 @@ import {
 } from '../../interfaces/persistence/repository.interface';
 import {Task} from '../../../persistence/models/task.model';
 
+let _repository: RepositoryInterface;
+
 /**
  * The list of task related methods to be
  * exposed by the API
  * @class TaskController
  */
 export class TaskController {
-  repository: RepositoryInterface;
-
   /**
    * Initialize the task controller
    * @param  {RepositoryInterface} repository: The repository to be used
    */
   constructor(repository: RepositoryInterface) {
-    this.repository = repository;
+    _repository = repository;
   }
 
   /**
@@ -38,7 +38,7 @@ export class TaskController {
     };
 
     try {
-      const createdTask = await this.repository.createNewTask(taskToBeCreated);
+      const createdTask = await _repository.createNewTask(taskToBeCreated);
       return createdTask;
     } catch (error) {
       return error;
@@ -54,7 +54,7 @@ export class TaskController {
     try {
       const id = request.params.id;
 
-      const task = await this.repository.getTask(id);
+      const task = await _repository.getTask(id);
       return task;
     } catch (error) {
       return error;
@@ -67,7 +67,7 @@ export class TaskController {
    */
   async getAllTasks() {
     try {
-      const tasks = await this.repository.getAllTasks();
+      const tasks = await _repository.getAllTasks();
       return tasks;
     } catch (error) {
       return error;
@@ -84,7 +84,7 @@ export class TaskController {
     const payload = request.payload;
     const taskId = request.params.id;
     try {
-      const task = await this.repository.updateTask(taskId, payload);
+      const task = await _repository.updateTask(taskId, payload);
       return task;
     } catch (error) {
       return error;
@@ -99,7 +99,7 @@ export class TaskController {
   async executeTask(request: TaskByIdRequestInterface) {
     try {
       const id = request.params.id;
-      const updatedTask = await this.repository.updateTask(id, {
+      const updatedTask = await _repository.updateTask(id, {
         executed_on: new Date(),
       });
       return updatedTask;
@@ -116,7 +116,7 @@ export class TaskController {
   async deleteTask(request: TaskByIdRequestInterface) {
     const taskId = request.params.id;
     try {
-      await this.repository.deleteTask(taskId);
+      await _repository.deleteTask(taskId);
       return {
         message: 'Task deleted successfully',
       };
