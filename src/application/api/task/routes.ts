@@ -1,11 +1,13 @@
 import {TaskController} from './controller';
-import {RepositoryInterface} from '../../interfaces/persistence/repository.interface';
+import {
+  RepositoryInterface,
+} from '../../interfaces/persistence/repository.interface';
 import {
   createTaskValidator,
   requestByIdValidator,
   updateTaskValidator,
 } from './validation';
-import { Server } from '@hapi/hapi';
+import {Server} from '@hapi/hapi';
 
 export const register = (server: Server, repository: RepositoryInterface) => {
   const taskController = new TaskController(repository);

@@ -1,9 +1,10 @@
 import {manifest, options} from './server';
-import * as Hapi from 'hapi';
-import {RepositoryInterface} from './interfaces/persistence/repository.interface';
+import {
+  RepositoryInterface,
+} from './interfaces/persistence/repository.interface';
 import {registerRoutes} from './configurations/server/routes.config';
 import {initializeRepository} from './configurations/server/repository.config';
-import {compose} from '@hapi/glue'
+import {compose} from '@hapi/glue';
 
 require('dotenv').config();
 

@@ -3,7 +3,9 @@ import {
   TaskByIdRequestInterface,
   UpdateTaskRequestInterface,
 } from '../../interfaces/api/taskInterfaces';
-import {RepositoryInterface} from '../../interfaces/persistence/repository.interface';
+import {
+  RepositoryInterface,
+} from '../../interfaces/persistence/repository.interface';
 import {Task} from '../../../persistence/models/task.model';
 
 /**

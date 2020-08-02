@@ -1,6 +1,8 @@
-import {RepositoryInterface} from '../../interfaces/persistence/repository.interface';
+import {
+  RepositoryInterface,
+} from '../../interfaces/persistence/repository.interface';
 import * as TaskRoutes from '../../api/task/routes';
-import { Server } from '@hapi/hapi';
+import {Server} from '@hapi/hapi';
 /**
  * Register the API's routesz
  * @param  {Server} server: The already configured server

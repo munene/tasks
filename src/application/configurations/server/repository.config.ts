@@ -1,4 +1,6 @@
-import {RepositoryInterface} from '../../interfaces/persistence/repository.interface';
+import {
+  RepositoryInterface,
+} from '../../interfaces/persistence/repository.interface';
 import {
   InMemoryRepository,
 } from '../../../persistence/InMemoryRepository/repository';
