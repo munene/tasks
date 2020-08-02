@@ -2,6 +2,7 @@ import {
   IRepository,
 } from '../../application/interfaces/persistence/repository.interface';
 import {Task} from '../models/task.model';
+import * as Boom from 'boom';
 
 /**
  * The implementation of the im memory repository
@@ -17,14 +18,14 @@ export class InMemoryRepository implements IRepository {
    */
   constructor() {
     this.tasks = [];
-  };
+  }
 
   /**
    * Create and save the task in the tasks array
    * @param  {Partial<Task>} newTask: The task details to be created
    * @return {Promise<Task>} The created task
    */
-  createNewTask(newTask: Partial<Task>): Promise<Task> {
+  createNewTask(newTask: Task): Promise<Task> {
     return new Promise((resolve) => {
       const task: Task = {
         id: ++this.latestId,
@@ -68,17 +69,17 @@ export class InMemoryRepository implements IRepository {
    */
   updateTask(id: number, dataToUpdate: Partial<Task>): Promise<Task> {
     return new Promise((resolve) => {
-      const existingTask = this.tasks.find((task) => task.id === id);
+      let existingTask = this.tasks.find((task) => task.id === id);
+
+      if (!existingTask) {
+        throw Boom.notFound('The task does not exist');
+      }
 
       /* Iterate through the data's properties,
          each of which is a key value tuple with two objects,
          index 0 being the key and index 1 being the value
       */
-      for (const property of Object.entries(dataToUpdate)) {
-        const key = property[0];
-        const value = property[1];
-        existingTask[key] = value;
-      }
+      existingTask = Object.assign(existingTask, dataToUpdate);
       resolve(existingTask);
     });
   }

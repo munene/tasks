@@ -1,7 +1,7 @@
 import {IRepository} from '../../interfaces/persistence/repository.interface';
 import {
   InMemoryRepository,
-} from '../../../persistence/In Memory Repository/repository';
+} from '../../../persistence/InMemoryRepository/repository';
 
 /**
  * Initialize and return the repository to be used.
@@ -11,6 +11,7 @@ import {
  */
 export const initializeRepository = async (): Promise<IRepository> => {
   return new Promise((resolve) => {
-    resolve(new InMemoryRepository());
+    const repository = new InMemoryRepository();
+    resolve(repository);
   });
 };

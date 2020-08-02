@@ -81,3 +81,6 @@ typings/
 
 # Environment Variables
 .env
+
+# Build directory
+dist
