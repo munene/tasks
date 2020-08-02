@@ -1,5 +1,5 @@
 import {
-  IRepository,
+  RepositoryInterface,
 } from '../../application/interfaces/persistence/repository.interface';
 import {Task} from '../models/task.model';
 import * as Boom from 'boom';
@@ -8,9 +8,9 @@ import * as Boom from 'boom';
  * The implementation of the im memory repository
  * @class InMemoryRepository
  */
-export class InMemoryRepository implements IRepository {
+export class InMemoryRepository implements RepositoryInterface {
   tasks: Task[];
-  latestId: number = 0;
+  latestId: number;
 
   /**
    * Initiate the in memory repository
@@ -18,6 +18,7 @@ export class InMemoryRepository implements IRepository {
    */
   constructor() {
     this.tasks = [];
+    this.latestId = 0;
   }
 
   /**

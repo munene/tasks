@@ -1,18 +1,18 @@
 import {manifest, options} from './server';
 import * as Hapi from 'hapi';
-import {IRepository} from './interfaces/persistence/repository.interface';
+import {RepositoryInterface} from './interfaces/persistence/repository.interface';
 import {registerRoutes} from './configurations/server/routes.config';
 import {initializeRepository} from './configurations/server/repository.config';
+import {compose} from '@hapi/glue'
 
 require('dotenv').config();
-const glue = require('@hapi/glue');
 
 const startServer = async () => {
   try {
-    const server: Hapi.Server = await glue.compose(manifest, options);
+    const server = await compose(manifest, options);
 
     // Initialize the database repository
-    const repository: IRepository = await initializeRepository();
+    const repository: RepositoryInterface = await initializeRepository();
 
     // Register the API routes
     await registerRoutes(server, repository);

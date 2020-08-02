@@ -1,6 +1,6 @@
 import {Task} from '../../../persistence/models/task.model';
 
-export interface IRepository {
+export interface RepositoryInterface {
   createNewTask(newTask: Partial<Task>): Promise<Task>;
   getTask(id: number): Promise<Task>;
   getAllTasks(): Promise<Task[]>

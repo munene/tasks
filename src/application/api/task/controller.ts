@@ -1,9 +1,9 @@
 import {
-  ICreateTaskRequest,
-  ITaskByIdRequest,
-  IUpdateTaskRequest,
+  CreateTaskRequestInterface,
+  TaskByIdRequestInterface,
+  UpdateTaskRequestInterface,
 } from '../../interfaces/api/taskInterfaces';
-import {IRepository} from '../../interfaces/persistence/repository.interface';
+import {RepositoryInterface} from '../../interfaces/persistence/repository.interface';
 import {Task} from '../../../persistence/models/task.model';
 
 /**
@@ -12,13 +12,13 @@ import {Task} from '../../../persistence/models/task.model';
  * @class TaskController
  */
 export class TaskController {
-  repository: IRepository;
+  repository: RepositoryInterface;
 
   /**
    * Initialize the task controller
-   * @param  {IRepository} repository: The repository to be used
+   * @param  {RepositoryInterface} repository: The repository to be used
    */
-  constructor(repository: IRepository) {
+  constructor(repository: RepositoryInterface) {
     this.repository = repository;
   }
 
@@ -27,7 +27,7 @@ export class TaskController {
    * @param  {ICreateTaskRequest} request: Request with Task payload data
    * @return {Boom | Task} A server error or the task created
    */
-  async createTask(request: ICreateTaskRequest) {
+  async createTask(request: CreateTaskRequestInterface) {
     const payload = request.payload;
     const taskToBeCreated: Task = {
       title: payload.title,
@@ -48,7 +48,7 @@ export class TaskController {
    * @param  {ITaskByIdRequest} request: Request with an id param
    * @return {Boom | Task} A server error or the task requested
    */
-  async getTaskById(request: ITaskByIdRequest) {
+  async getTaskById(request: TaskByIdRequestInterface) {
     try {
       const id = request.params.id;
 
@@ -78,7 +78,7 @@ export class TaskController {
    * and the data to update
    * @return {Boom | Task} a server error or the updated task
    */
-  async updateTask(request: IUpdateTaskRequest) {
+  async updateTask(request: UpdateTaskRequestInterface) {
     const payload = request.payload;
     const taskId = request.params.id;
     try {
@@ -95,7 +95,7 @@ export class TaskController {
    * @param  {ITaskByIdRequest} request: Request with the task id
    * @return {Boom | Task} a server error or the executed task
    */
-  async executeTask(request: ITaskByIdRequest) {
+  async executeTask(request: TaskByIdRequestInterface) {
     try {
       const id = request.params.id;
       const updatedTask = await this.repository.updateTask(id, {
@@ -112,7 +112,7 @@ export class TaskController {
    * @param  {ITaskByIdRequest} request: Request with the task id
    * @return {Boom | Task} a server error or the deleted task
    */
-  async deleteTask(request: ITaskByIdRequest) {
+  async deleteTask(request: TaskByIdRequestInterface) {
     const taskId = request.params.id;
     try {
       await this.repository.deleteTask(taskId);

@@ -1,6 +1,6 @@
 import * as Hapi from 'hapi';
 
-export interface ICreateTaskRequest extends Hapi.RequestOrig {
+export interface CreateTaskRequestInterface extends Hapi.RequestOrig {
   payload: {
     title: string,
     description: string,
@@ -8,13 +8,13 @@ export interface ICreateTaskRequest extends Hapi.RequestOrig {
   };
 }
 
-export interface ITaskByIdRequest extends Hapi.RequestOrig {
+export interface TaskByIdRequestInterface extends Hapi.RequestOrig {
   params: {
     id: number;
   };
 }
 
-export interface IUpdateTaskRequest extends Hapi.RequestOrig {
+export interface UpdateTaskRequestInterface extends Hapi.RequestOrig {
   payload: {
 
   };
@@ -23,7 +23,7 @@ export interface IUpdateTaskRequest extends Hapi.RequestOrig {
   };
 }
 
-export interface IDeleteTaskRequest extends Hapi.RequestOrig {
+export interface DeleteTaskRequest extends Hapi.RequestOrig {
   params: {
     id: number;
   };
