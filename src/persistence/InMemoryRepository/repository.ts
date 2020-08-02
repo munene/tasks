@@ -2,7 +2,7 @@ import {
   RepositoryInterface,
 } from '../../application/interfaces/persistence/repository.interface';
 import {Task} from '../models/task.model';
-import * as Boom from 'boom';
+import {notFound} from 'boom';
 
 /**
  * The implementation of the im memory repository
@@ -46,8 +46,11 @@ export class InMemoryRepository implements RepositoryInterface {
    * @return {Promise<Task>} The requested task
    */
   getTask(id: number): Promise<Task> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const existingTask = this.tasks.find((task) => task.id === id);
+      if (!existingTask) {
+        reject(notFound('The task does not exist'));
+      }
       resolve(existingTask);
     });
   }
@@ -69,11 +72,11 @@ export class InMemoryRepository implements RepositoryInterface {
    * @return {Promise<Task>} The updated task
    */
   updateTask(id: number, dataToUpdate: Partial<Task>): Promise<Task> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let existingTask = this.tasks.find((task) => task.id === id);
 
       if (!existingTask) {
-        throw Boom.notFound('The task does not exist');
+        reject(notFound('The task does not exist'));
       }
 
       /* Iterate through the data's properties,
@@ -91,7 +94,13 @@ export class InMemoryRepository implements RepositoryInterface {
    * @return {Promise<boolean>} Whether or not the task was successfully deleted
    */
   deleteTask(id: number): Promise<boolean> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+      const existingTask = this.tasks.find((task) => task.id === id);
+
+      if (!existingTask) {
+        reject(notFound('The task does not exist'));
+      }
+
       this.tasks = this.tasks.filter((task) => task.id !== id);
       resolve(true);
     });

@@ -34,7 +34,7 @@ export class TaskController {
     const taskToBeCreated: Task = {
       title: payload.title,
       description: payload.description,
-      due_date: payload.dueDate,
+      due_date: payload.due_date,
     };
 
     try {
@@ -88,7 +88,6 @@ export class TaskController {
       return task;
     } catch (error) {
       return error;
-      // return Boom.internal(error.message);
     }
   }
 
@@ -121,8 +120,6 @@ export class TaskController {
       return {
         message: 'Task deleted successfully',
       };
-
-      // TODO: return Boom.badData('We could not delete the task');
     } catch (error) {
       return error;
     }
