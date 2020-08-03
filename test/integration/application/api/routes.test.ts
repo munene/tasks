@@ -5,7 +5,7 @@ import {Task} from '../../../../src/persistence/models/task.model';
 import {Server} from '@hapi/hapi';
 import {setUpServer} from '../../../factory';
 
-describe('task controller', () => {
+describe('API Routes', () => {
   let repository: InMemoryRepository;
   let server: Server;
 
@@ -172,7 +172,7 @@ describe('task controller', () => {
 
     const request = {
       method: 'GET',
-      url: `/task?executed=1`,
+      url: `/task?executed=true`,
     };
 
     const response = await server.inject(request);
@@ -205,7 +205,7 @@ describe('task controller', () => {
 
     const request = {
       method: 'GET',
-      url: `/task?executed=0`,
+      url: `/task?executed=false`,
     };
 
     const response = await server.inject(request);
@@ -222,42 +222,7 @@ describe('task controller', () => {
     // currently yesterday = now. set date one day into the future
     yesterday.setDate(yesterday.getDate() - 1);
     // currently tomorrow = now. set date one day into the future
-    tomorrow.setDate(yesterday.getDate() + 1);
-
-    const taskDetails: Task = {
-      title: 'Test task',
-      description: 'This is a test task',
-      due_date: yesterday,
-    };
-    const taskDetails1: Task = {
-      title: 'Test task 2',
-      description: 'This is a second test task',
-      due_date: tomorrow,
-    };
-    await repository.createNewTask(taskDetails);
-    await repository.createNewTask(taskDetails1);
-    await repository.updateTask(1, {executed_on: new Date()});
-
-    const request = {
-      method: 'GET',
-      url: `/task?expired=1`,
-    };
-
-    const response = await server.inject(request);
-
-    expect(response.statusCode).toEqual(200);
-    // @ts-ignore
-    expect(response.result.length).toEqual(1);
-  });
-
-  it('/task (GET) queries for all tasks by not expired', async () => {
-    const yesterday = new Date();
-    const tomorrow = new Date();
-
-    // currently yesterday = now. set date one day into the future
-    yesterday.setDate(yesterday.getDate() - 1);
-    // currently tomorrow = now. set date one day into the future
-    tomorrow.setDate(yesterday.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     const taskDetails: Task = {
       title: 'Test task',
@@ -277,11 +242,50 @@ describe('task controller', () => {
     await repository.createNewTask(taskDetails);
     await repository.createNewTask(taskDetails1);
     await repository.createNewTask(taskDetails2);
-    await repository.updateTask(1, {executed_on: new Date()});
 
     const request = {
       method: 'GET',
-      url: `/task?executed=0`,
+      url: `/task?expired=true`,
+    };
+
+    const response = await server.inject(request);
+
+    expect(response.statusCode).toEqual(200);
+    // @ts-ignore
+    expect(response.result.length).toEqual(1);
+  });
+
+  it('/task (GET) queries for all tasks by not expired', async () => {
+    const yesterday = new Date();
+    const tomorrow = new Date();
+
+    // currently yesterday = now. set date one day into the future
+    yesterday.setDate(yesterday.getDate() - 1);
+    // currently tomorrow = now. set date one day into the future
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const taskDetails: Task = {
+      title: 'Test task',
+      description: 'This is a test task',
+      due_date: yesterday,
+    };
+    const taskDetails1: Task = {
+      title: 'Test task 2',
+      description: 'This is a second test task',
+      due_date: tomorrow,
+    };
+    const taskDetails2: Task = {
+      title: 'Test task 3',
+      description: 'This is a third test task',
+      due_date: tomorrow,
+    };
+    await repository.createNewTask(taskDetails);
+    await repository.createNewTask(taskDetails1);
+    await repository.createNewTask(taskDetails2);
+
+    const request = {
+      method: 'GET',
+      url: `/task?expired=false`,
     };
 
     const response = await server.inject(request);

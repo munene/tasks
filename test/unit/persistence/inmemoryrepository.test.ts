@@ -56,7 +56,10 @@ describe('The In Memory Repository', () => {
     const createdTask = await repository.createNewTask(taskDetails);
     const createdTask1 = await repository.createNewTask(taskDetails1);
 
-    const allTasks = await repository.getAllTasks();
+    const allTasks = await repository.getTasks({
+      itemCount: 10,
+      page: 0,
+    });
     expect(allTasks.length).toEqual(2);
     expect(allTasks[0]).toBe(createdTask);
     expect(allTasks[1]).toBe(createdTask1);
@@ -103,7 +106,10 @@ describe('The In Memory Repository', () => {
 
     expect(successfullyDeleted).toEqual(true);
 
-    const remainingTasks = await repository.getAllTasks();
+    const remainingTasks = await repository.getTasks({
+      itemCount: 10,
+      page: 0,
+    });
     expect(remainingTasks.length).toEqual(1);
     expect(remainingTasks[0]).toEqual(createdTask1);
   });

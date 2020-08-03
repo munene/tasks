@@ -2,6 +2,7 @@ import {
   CreateTaskRequestInterface,
   TaskByIdRequestInterface,
   UpdateTaskRequestInterface,
+  GetTasksRequestInterface,
 } from '../../interfaces/api/taskInterfaces';
 import {
   RepositoryInterface,
@@ -63,11 +64,13 @@ export class TaskController {
 
   /**
    * Get all the tasks from the repository
+   * @param  {GetTasksRequestInterface} request: Request potentially with
+   * filter queries
    * @return {Boom | Task[]} A server error or the list of tasks
    */
-  async getAllTasks() {
+  async getTasks(request: GetTasksRequestInterface) {
     try {
-      const tasks = await _repository.getAllTasks();
+      const tasks = await _repository.getTasks(request.query);
       return tasks;
     } catch (error) {
       return error;

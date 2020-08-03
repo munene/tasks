@@ -29,8 +29,8 @@ export const register = (server: Server, repository: RepositoryInterface) => {
     method: 'GET',
     path: '/task',
     options: {
-      handler: taskController.getAllTasks,
-      description: 'Get all tasks',
+      handler: taskController.getTasks,
+      description: 'Get tasks',
       validate: {
         query: getTasksQueryValidator,
       },

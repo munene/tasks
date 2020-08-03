@@ -6,10 +6,11 @@ import {
   CreateTaskRequestInterface,
   TaskByIdRequestInterface,
   UpdateTaskRequestInterface,
+  GetTasksRequestInterface,
 } from '../../../../src/application/interfaces/api/taskInterfaces';
 import {Task} from '../../../../src/persistence/models/task.model';
 
-describe('task controller', async () => {
+describe('task controller', () => {
   let repository: InMemoryRepository;
   let controller: TaskController;
 
@@ -79,7 +80,12 @@ describe('task controller', async () => {
     };
     await repository.createNewTask(taskDetails);
     await repository.createNewTask(taskDetails1);
-    const response = await controller.getAllTasks();
+    const request: GetTasksRequestInterface = {
+      params: {},
+      query: {page: 0, itemCount: 10},
+      payload: {},
+    };
+    const response = await controller.getTasks(request);
     expect(response.length).toEqual(2);
   });
 

@@ -32,3 +32,16 @@ export interface DeleteTaskRequest extends RequestOrig {
     id: number;
   };
 }
+
+export interface GetTasksRequestInterface extends RequestOrig {
+  query: GetTasksQuery;
+}
+
+export type GetTasksQuery = {
+  page?: number,
+  itemCount?: number,
+  title?: string,
+  description?: string,
+  executed?: boolean,
+  expired?: boolean,
+}

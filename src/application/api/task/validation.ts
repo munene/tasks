@@ -19,10 +19,10 @@ export const requestByIdValidator = Joi.object().keys({
 });
 
 export const getTasksQueryValidator = Joi.object().keys({
-  page: Joi.number().optional(),
-  itemCount: Joi.number().optional(),
+  page: Joi.number().optional().default(0),
+  itemCount: Joi.number().optional().default(10),
   title: Joi.string().optional(),
   description: Joi.string().optional(),
   executed: Joi.boolean().optional(),
-  expired: Joi.number().optional(),
+  expired: Joi.boolean().optional(),
 });
