@@ -1,4 +1,4 @@
-const Joi = require('@hapi/joi');
+import Joi from '@hapi/joi';
 
 // These are the required initial fields of a task
 export const createTaskValidator = Joi.object().keys({
@@ -16,4 +16,13 @@ export const updateTaskValidator = Joi.object().keys({
 
 export const requestByIdValidator = Joi.object().keys({
   id: Joi.number().required(),
+});
+
+export const getTasksQueryValidator = Joi.object().keys({
+  page: Joi.number().optional(),
+  itemCount: Joi.number().optional(),
+  title: Joi.string().optional(),
+  description: Joi.string().optional(),
+  executed: Joi.boolean().optional(),
+  expired: Joi.number().optional(),
 });

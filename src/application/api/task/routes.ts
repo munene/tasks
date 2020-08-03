@@ -6,6 +6,7 @@ import {
   createTaskValidator,
   requestByIdValidator,
   updateTaskValidator,
+  getTasksQueryValidator,
 } from './validation';
 import {Server} from '@hapi/hapi';
 
@@ -26,10 +27,13 @@ export const register = (server: Server, repository: RepositoryInterface) => {
 
   server.route({
     method: 'GET',
-    path: '/task/all',
+    path: '/task',
     options: {
       handler: taskController.getAllTasks,
       description: 'Get all tasks',
+      validate: {
+        query: getTasksQueryValidator,
+      },
     },
   });
 
