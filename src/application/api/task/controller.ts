@@ -7,18 +7,20 @@ import {
 import {
   RepositoryInterface,
 } from '../../interfaces/persistence/repository.interface';
-import {Task} from '../../../persistence/models/task.model';
+import {
+  TaskInterface,
+} from '../../interfaces/persistence/task.model.interface';
 
 let _repository: RepositoryInterface;
 
 /**
- * The list of task related methods to be
+ * The list of TaskInterface related methods to be
  * exposed by the API
  * @class TaskController
  */
 export class TaskController {
   /**
-   * Initialize the task controller
+   * Initialize the TaskInterface controller
    * @param  {RepositoryInterface} repository: The repository to be used
    */
   constructor(repository: RepositoryInterface) {
@@ -26,13 +28,14 @@ export class TaskController {
   }
 
   /**
-   * Creates a task in the specified repository
-   * @param  {ICreateTaskRequest} request: Request with Task payload data
-   * @return {Boom | Task} A server error or the task created
+   * Creates a TaskInterface in the specified repository
+   * @param  {ICreateTaskRequest} request: Request with
+   * TaskInterface payload data
+   * @return {Boom | TaskInterface} A server error or the TaskInterface created
    */
   async createTask(request: CreateTaskRequestInterface) {
     const payload = request.payload;
-    const taskToBeCreated: Task = {
+    const taskToBeCreated: TaskInterface = {
       title: payload.title,
       description: payload.description,
       due_date: payload.due_date,
@@ -47,17 +50,18 @@ export class TaskController {
   }
 
   /**
-   * Gets the data of the task id requested from the repository
+   * Gets the data of the TaskInterface id requested from the repository
    * @param  {ITaskByIdRequest} request: Request with an id param
-   * @return {Boom | Task} A server error or the task requested
+   * @return {Boom | TaskInterface}A server error or the TaskInterface requested
    */
   async getTaskById(request: TaskByIdRequestInterface) {
     try {
       const id = request.params.id;
 
-      const task = await _repository.getTask(id);
-      return task;
+      const TaskInterface = await _repository.getTask(id);
+      return TaskInterface;
     } catch (error) {
+      console.log(error);
       return error;
     }
   }
@@ -66,7 +70,7 @@ export class TaskController {
    * Get all the tasks from the repository
    * @param  {GetTasksRequestInterface} request: Request potentially with
    * filter queries
-   * @return {Boom | Task[]} A server error or the list of tasks
+   * @return {Boom | TaskInterface[]} A server error or the list of tasks
    */
   async getTasks(request: GetTasksRequestInterface) {
     try {
@@ -78,26 +82,26 @@ export class TaskController {
   }
 
   /**
-   * Update a task
-   * @param  {IUpdateTaskRequest} request: Request with the task id
+   * Update a TaskInterface
+   * @param  {IUpdateTaskRequest} request: Request with the TaskInterface id
    * and the data to update
-   * @return {Boom | Task} a server error or the updated task
+   * @return {Boom | TaskInterface} a server error or the updated TaskInterface
    */
   async updateTask(request: UpdateTaskRequestInterface) {
     const payload = request.payload;
     const taskId = request.params.id;
     try {
-      const task = await _repository.updateTask(taskId, payload);
-      return task;
+      const TaskInterface = await _repository.updateTask(taskId, payload);
+      return TaskInterface;
     } catch (error) {
       return error;
     }
   }
 
   /**
-   * Mark a task as executed in the repository
-   * @param  {ITaskByIdRequest} request: Request with the task id
-   * @return {Boom | Task} a server error or the executed task
+   * Mark a TaskInterface as executed in the repository
+   * @param  {ITaskByIdRequest} request: Request with the TaskInterface id
+   * @return {Boom | TaskInterface} a server error or the executed TaskInterface
    */
   async executeTask(request: TaskByIdRequestInterface) {
     try {
@@ -112,16 +116,16 @@ export class TaskController {
   }
 
   /**
-   * Delete a task from the repository
-   * @param  {ITaskByIdRequest} request: Request with the task id
-   * @return {Boom | Task} a server error or the deleted task
+   * Delete a TaskInterface from the repository
+   * @param  {ITaskByIdRequest} request: Request with the TaskInterface id
+   * @return {Boom | TaskInterface} a server error or the deleted TaskInterface
    */
   async deleteTask(request: TaskByIdRequestInterface) {
     const taskId = request.params.id;
     try {
       await _repository.deleteTask(taskId);
       return {
-        message: 'Task deleted successfully',
+        message: 'TaskInterface deleted successfully',
       };
     } catch (error) {
       return error;

@@ -1,9 +1,12 @@
 import {
   RepositoryInterface,
 } from '../../interfaces/persistence/repository.interface';
+// import {
+//   InMemoryRepository,
+// } from '../../../persistence/InMemoryRepository/repository';
 import {
-  InMemoryRepository,
-} from '../../../persistence/InMemoryRepository/repository';
+  PostgresRepository,
+} from '../../../persistence/PostgresRepository/repository';
 
 /**
  * Initialize and return the repository to be used.
@@ -12,8 +15,9 @@ import {
  * will inject everywhere else
  */
 export const initializeRepository = async (): Promise<RepositoryInterface> => {
-  return new Promise((resolve) => {
-    const repository = new InMemoryRepository();
+  return new Promise(async (resolve) => {
+    const repository = new PostgresRepository();
+    await repository.connectDatabase();
     resolve(repository);
   });
 };

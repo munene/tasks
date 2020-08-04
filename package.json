@@ -24,7 +24,10 @@
     "@types/hapi": "^18.0.3",
     "boom": "^7.3.0",
     "dotenv": "^8.2.0",
-    "eslint-plugin-typescript": "^0.14.0"
+    "eslint-plugin-typescript": "^0.14.0",
+    "pg": "^8.3.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.4"
   },
   "devDependencies": {
     "@types/hapi__glue": "^6.1.1",

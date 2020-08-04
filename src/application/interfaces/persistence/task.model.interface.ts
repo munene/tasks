@@ -1,10 +1,5 @@
 /* eslint-disable camelcase */
-
-/**
- * A type representing a task
- * @type Task
- */
-export type Task = {
+export interface TaskInterface {
   id?: number,
   title: string,
   description: string,

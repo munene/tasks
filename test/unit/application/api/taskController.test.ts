@@ -8,7 +8,10 @@ import {
   UpdateTaskRequestInterface,
   GetTasksRequestInterface,
 } from '../../../../src/application/interfaces/api/taskInterfaces';
-import {Task} from '../../../../src/persistence/models/task.model';
+import {
+  TaskInterface,
+} from
+  '../../../../src/application/interfaces/persistence/task.model.interface';
 
 describe('task controller', () => {
   let repository: InMemoryRepository;
@@ -36,7 +39,7 @@ describe('task controller', () => {
   });
 
   it('queries for a task by id and successfully get it', async () => {
-    const taskToAdd: Task = {
+    const taskToAdd: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
@@ -68,12 +71,12 @@ describe('task controller', () => {
   });
 
   it('queries for all tasks', async () => {
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: new Date(),
@@ -90,7 +93,7 @@ describe('task controller', () => {
   });
 
   it('successfully updates an activity', async () => {
-    const taskToAdd: Task = {
+    const taskToAdd: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
@@ -132,7 +135,7 @@ describe('task controller', () => {
       });
 
   it('marks a task as executed', async () => {
-    const taskToAdd: Task = {
+    const taskToAdd: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
@@ -164,7 +167,7 @@ describe('task controller', () => {
       });
 
   it('deletes a task successfully', async () => {
-    const taskToAdd: Task = {
+    const taskToAdd: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
@@ -179,7 +182,7 @@ describe('task controller', () => {
     };
 
     const response = await controller.deleteTask(request);
-    expect(response.message).toEqual('Task deleted successfully');
+    expect(response.message).toEqual('TaskInterface deleted successfully');
   });
 
   it('returns a 404 when you try to delete a non-existent task', async () => {

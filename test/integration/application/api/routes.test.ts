@@ -1,9 +1,12 @@
 import {
   InMemoryRepository,
 } from '../../../../src/persistence/InMemoryRepository/repository';
-import {Task} from '../../../../src/persistence/models/task.model';
 import {Server} from '@hapi/hapi';
 import {setUpServer} from '../../../factory';
+import {
+  TaskInterface,
+} from
+  '../../../../src/application/interfaces/persistence/task.model.interface';
 
 describe('API Routes', () => {
   let repository: InMemoryRepository;
@@ -38,7 +41,7 @@ describe('API Routes', () => {
 
   it('/task/{id} (GET) queries for a task by id and successfully get it',
       async () => {
-        const taskToAdd: Task = {
+        const taskToAdd: TaskInterface = {
           title: 'Test task',
           description: 'This is a test task',
           due_date: new Date(),
@@ -78,12 +81,12 @@ describe('API Routes', () => {
   });
 
   it('/task (GET) queries for all tasks', async () => {
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: new Date(),
@@ -104,12 +107,12 @@ describe('API Routes', () => {
   });
 
   it('/task (GET) queries for all tasks by title', async () => {
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: new Date(),
@@ -130,12 +133,12 @@ describe('API Routes', () => {
   });
 
   it('/task (GET) queries for all tasks by description', async () => {
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: new Date(),
@@ -156,12 +159,12 @@ describe('API Routes', () => {
   });
 
   it('/task (GET) queries for all tasks by executed', async () => {
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: new Date(),
@@ -183,17 +186,17 @@ describe('API Routes', () => {
   });
 
   it('/task (GET) queries for all tasks by not executed', async () => {
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: new Date(),
     };
-    const taskDetails2: Task = {
+    const taskDetails2: TaskInterface = {
       title: 'Test task 3',
       description: 'This is a third test task',
       due_date: new Date(),
@@ -224,17 +227,17 @@ describe('API Routes', () => {
     // currently tomorrow = now. set date one day into the future
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: yesterday,
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: tomorrow,
     };
-    const taskDetails2: Task = {
+    const taskDetails2: TaskInterface = {
       title: 'Test task 3',
       description: 'This is a third test task',
       due_date: tomorrow,
@@ -264,17 +267,17 @@ describe('API Routes', () => {
     // currently tomorrow = now. set date one day into the future
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const taskDetails: Task = {
+    const taskDetails: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: yesterday,
     };
-    const taskDetails1: Task = {
+    const taskDetails1: TaskInterface = {
       title: 'Test task 2',
       description: 'This is a second test task',
       due_date: tomorrow,
     };
-    const taskDetails2: Task = {
+    const taskDetails2: TaskInterface = {
       title: 'Test task 3',
       description: 'This is a third test task',
       due_date: tomorrow,
@@ -296,7 +299,7 @@ describe('API Routes', () => {
   });
 
   it('/task (PUT) successfully updates an activity', async () => {
-    const taskToAdd: Task = {
+    const taskToAdd: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
@@ -336,7 +339,7 @@ describe('API Routes', () => {
       });
 
   it('marks a task as executed', async () => {
-    const taskToAdd: Task = {
+    const taskToAdd: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
@@ -369,7 +372,7 @@ describe('API Routes', () => {
       });
 
   it('deletes a task successfully', async () => {
-    const taskToAdd: Task = {
+    const taskToAdd: TaskInterface = {
       title: 'Test task',
       description: 'This is a test task',
       due_date: new Date(),
@@ -384,7 +387,8 @@ describe('API Routes', () => {
     const response = await server.inject(request);
 
     // @ts-ignore
-    expect(response.result.message).toEqual('Task deleted successfully');
+    expect(response.result.message)
+        .toEqual('TaskInterface deleted successfully');
   });
 
   it('returns a 404 when you try to delete a non-existent task', async () => {

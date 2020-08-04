@@ -1,16 +1,16 @@
 import {
   RepositoryInterface,
 } from '../../application/interfaces/persistence/repository.interface';
-import {Task} from '../models/task.model';
 import {notFound} from 'boom';
 import {GetTasksQuery} from '../../application/interfaces/api/taskInterfaces';
+import {InMemoryTask} from './task.model';
 
 /**
  * The implementation of the im memory repository
  * @class InMemoryRepository
  */
 export class InMemoryRepository implements RepositoryInterface {
-  tasks: Task[];
+  tasks: InMemoryTask[];
   latestId: number;
 
   /**
@@ -24,12 +24,12 @@ export class InMemoryRepository implements RepositoryInterface {
 
   /**
    * Create and save the task in the tasks array
-   * @param  {Partial<Task>} newTask: The task details to be created
-   * @return {Promise<Task>} The created task
+   * @param  {Partial<InMemoryTask>} newTask: The task details to be created
+   * @return {Promise<InMemoryTask>} The created task
    */
-  createNewTask(newTask: Task): Promise<Task> {
+  createNewTask(newTask: InMemoryTask): Promise<InMemoryTask> {
     return new Promise((resolve) => {
-      const task: Task = {
+      const task: InMemoryTask = {
         id: ++this.latestId,
         title: newTask.title,
         description: newTask.description,
@@ -42,11 +42,11 @@ export class InMemoryRepository implements RepositoryInterface {
   }
 
   /**
-   * Query and return the task array for one task by it's id
+   * Query the task array for one task by it's id
    * @param  {number} id: The id of the requested task
-   * @return {Promise<Task>} The requested task
+   * @return {Promise<InMemoryTask>} The requested task
    */
-  getTask(id: number): Promise<Task> {
+  getTask(id: number): Promise<InMemoryTask> {
     return new Promise((resolve, reject) => {
       const existingTask = this.tasks.find((task) => task.id === id);
       if (!existingTask) {
@@ -57,37 +57,14 @@ export class InMemoryRepository implements RepositoryInterface {
   }
 
   /**
-   * Returns the entire tasks array
+   * Returns a list of tasks
    * @param  {GetTasksQuery} query: the query to filter tasks by
-   * @return {Promise<Task[]>} The entire tasks array
+   * @return {Promise<InMemoryTask[]>} The entire tasks array
    */
-  getTasks(query: GetTasksQuery): Promise<Task[]> {
+  getTasks(query: GetTasksQuery): Promise<InMemoryTask[]> {
     return new Promise((resolve) => {
-      /*
-          nonAutoFilterProps are those where
-          have to apply a special filter on it.
-          The idea is that you'd have a long list of default
-          "automatic props, where the filter would be basically the same,
-          and a bunch of non-automatic props where the filter implementations
-          would be different for each"
-      */
-      const nonAutoFilterProps = ['page', 'itemCount', 'executed', 'expired'];
-
       // The list of automatic filters
-      const autoFilters: GetTasksQuery = {};
-
-      // Generate all automatic filters from the query
-      for (const queryProperty of Object.entries(query)) {
-        /*
-          queryProperty is a tuple where index 0 = the propery name
-          and index 1 is the value of the property
-        */
-        const propertyName = queryProperty[0];
-        if (!nonAutoFilterProps.includes(propertyName)) {
-          // @ts-ignore
-          autoFilters[propertyName] = queryProperty[1];
-        }
-      }
+      const autoFilters = this.generateAutoFilters(query);
 
       // Apply automatic filter
       let tasks = this.tasks.filter((task) => {
@@ -115,10 +92,11 @@ export class InMemoryRepository implements RepositoryInterface {
   /**
    * Update a task with the specified id, with the specified data
    * @param  {number} id: The id of the task to update
-   * @param  {Partial<Task>} dataToUpdate: The data to update
-   * @return {Promise<Task>} The updated task
+   * @param  {Partial<InMemoryTask>} dataToUpdate: The data to update
+   * @return {Promise<InMemoryTask>} The updated task
    */
-  updateTask(id: number, dataToUpdate: Partial<Task>): Promise<Task> {
+  updateTask(id: number, dataToUpdate: Partial<InMemoryTask>)
+  : Promise<InMemoryTask> {
     return new Promise((resolve, reject) => {
       let existingTask = this.tasks.find((task) => task.id === id);
 
@@ -158,11 +136,11 @@ export class InMemoryRepository implements RepositoryInterface {
    * only the page of tasks required
    * @param  {number} page the page number to paginate to
    * @param  {number} taskCount the number of tasks to return
-   * @param  {Array<Task>} tasks the tasks to paginate
-   * @return {Array<Task>} the appropriate page of tasks only
+   * @param  {Array<InMemoryTask>} tasks the tasks to paginate
+   * @return {Array<InMemoryTask>} the appropriate page of tasks only
    */
-  private paginate(page: number, taskCount: number, tasks: Array<Task>)
-  : Array<Task> {
+  private paginate(page: number, taskCount: number, tasks: Array<InMemoryTask>)
+  : Array<InMemoryTask> {
     const indexToStartFrom = page * taskCount;
     const indexToEndAt = indexToStartFrom + taskCount;
     tasks = tasks.slice(indexToStartFrom, indexToEndAt);
@@ -172,12 +150,12 @@ export class InMemoryRepository implements RepositoryInterface {
   /**
    * This method filters the tasks by their execution status
    * Will only run if query.executed is defined
-   * @param  {Task[]} tasks
+   * @param  {InMemoryTask[]} tasks
    * @param  {GetTasksQuery} query
-   * @return {Array<Task>} tfinal filtered list of tasks
+   * @return {Array<InMemoryTask>} tfinal filtered list of tasks
    */
-  private queryByExecuted(tasks: Array<Task>, query: GetTasksQuery)
-  : Array<Task> {
+  private queryByExecuted(tasks: Array<InMemoryTask>, query: GetTasksQuery)
+  : Array<InMemoryTask> {
     if (query.executed === undefined) {
       return tasks;
     }
@@ -192,12 +170,12 @@ export class InMemoryRepository implements RepositoryInterface {
   /**
    * This method filters the tasks by their expiry status
    * Will only run if query.expired is defined
-   * @param  {Task[]} tasks
+   * @param  {InMemoryTask[]} tasks
    * @param  {GetTasksQuery} query
-   * @return {Array<Task>} tfinal filtered list of tasks
+   * @return {Array<InMemoryTask>} tfinal filtered list of tasks
    */
-  private queryByExpired(tasks: Array<Task>, query: GetTasksQuery)
-  : Array<Task> {
+  private queryByExpired(tasks: Array<InMemoryTask>, query: GetTasksQuery)
+  : Array<InMemoryTask> {
     if (query.expired === undefined) {
       return tasks;
     }
@@ -208,5 +186,38 @@ export class InMemoryRepository implements RepositoryInterface {
       return query.expired ? task.due_date < now : task.due_date >= now;
     });
     return tasks;
+  }
+
+  /**
+   * This method generates a list of automatic filters
+     nonAutoFilterProps are those where have to apply a special filter on it.
+     The idea is that you'd have a long list of default
+     "automatic props", where the filter would be basically the same,
+     and a bunch of non-automatic props where the filter implementations
+     would be different for each
+   * @param  {GetTasksQuery} query
+     @return {GetTasksQuery} the automatic props
+   */
+  private generateAutoFilters(query: GetTasksQuery): GetTasksQuery {
+    // The list of automatic filters
+    const autoFilters: GetTasksQuery = {};
+
+    // The ones to leave out of the automatic filters
+    const nonAutoFilterProps = ['page', 'itemCount', 'executed', 'expired'];
+
+    // Generate all automatic filters from the query
+    for (const queryProperty of Object.entries(query)) {
+      /*
+        queryProperty is a tuple where index 0 = the propery name
+        and index 1 is the value of the property
+      */
+      const propertyName = queryProperty[0];
+      if (!nonAutoFilterProps.includes(propertyName)) {
+        // @ts-ignore
+        autoFilters[propertyName] = queryProperty[1];
+      }
+    }
+
+    return autoFilters;
   }
 }
