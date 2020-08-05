@@ -15,6 +15,17 @@ export const register = (server: Server, repository: RepositoryInterface) => {
 
   server.route({
     method: 'GET',
+    path: '/healthz',
+    options: {
+      handler: () => {
+        return 'Healthy';
+      },
+      description: 'Health checker',
+    },
+  });
+
+  server.route({
+    method: 'GET',
     path: '/task/{id}',
     options: {
       handler: taskController.getTaskById,
