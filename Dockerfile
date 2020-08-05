@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 # Install dependencies
 COPY package.json ./
-RUN npm Install
+RUN npm install
 
 # Copy src files
 COPY . .
