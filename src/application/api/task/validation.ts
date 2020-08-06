@@ -12,6 +12,7 @@ export const updateTaskValidator = Joi.object().keys({
   title: Joi.string().optional(),
   description: Joi.string().optional(),
   due_date: Joi.date().optional(),
+  executed_on: Joi.date().optional(),
 });
 
 export const requestByIdValidator = Joi.object().keys({

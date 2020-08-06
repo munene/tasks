@@ -125,7 +125,7 @@ export class TaskController {
     try {
       await _repository.deleteTask(taskId);
       return {
-        message: 'TaskInterface deleted successfully',
+        message: 'Task deleted successfully',
       };
     } catch (error) {
       return error;

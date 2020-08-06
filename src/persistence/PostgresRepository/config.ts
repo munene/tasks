@@ -2,7 +2,6 @@ import {Sequelize} from 'sequelize';
 let sequelize: Sequelize;
 
 export const getSequelize = () => {
-  // TODO: proper configs
   let dbName: string;
   let username: string;
   let password: string;
