@@ -165,28 +165,26 @@ Creates a new task and stores it in a repository
 
 `Content-Type: application/json`
 
-#### Query Params:
-
-**All Optional**
+#### Query Params (All Optional):
 
 ```
 The tasks title
-**title:** 'Test Title'
+title: 'Test Title'
 
 The tasks description
-**description**: 'This is a description'
+description: 'This is a description'
 
 Return only the executed or unexecuted tasks
-**executed**: true|false
+executed: true|false
 
-*Return only the expired or unexpired tasks*
-**expired**: true|false
+Return only the expired or unexpired tasks
+expired: true|false
 
-*The page number to return (default is the first page)*
-**page**: true|false
+The page number to return (default is the first page)
+page: true|false
 
-*The number of tasks to return (default is 10)*
-**itemCount**: true|false
+The number of tasks to return (default is 10)
+itemCount: true|false
 ```
 
 #### Success Response(s):
