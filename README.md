@@ -162,28 +162,32 @@ Creates a new task and stores it in a repository
 #### Method: `GET`
 
 #### Headers:
+
 `Content-Type: application/json`
 
 #### Query Params:
-  **All Optional**
 
-  *The tasks title*
-  **title:** 'Test Title'
+**All Optional**
 
-  *The tasks description*
-  **description**: 'This is a description'
+```
+The tasks title
+**title:** 'Test Title'
 
-  *Return only the executed or unexecuted tasks*
-  **executed**: true|false
+The tasks description
+**description**: 'This is a description'
 
-  *Return only the expired or unexpired tasks*
-  **expired**: true|false
+Return only the executed or unexecuted tasks
+**executed**: true|false
 
-  *The page number to return (default is the first page)*
-  **page**: true|false
+*Return only the expired or unexpired tasks*
+**expired**: true|false
 
-  *The number of tasks to return (default is 10)*
-  **itemCount**: true|false
+*The page number to return (default is the first page)*
+**page**: true|false
+
+*The number of tasks to return (default is 10)*
+**itemCount**: true|false
+```
 
 #### Success Response(s):
 
@@ -215,7 +219,6 @@ Creates a new task and stores it in a repository
     "message": "Internal Server Error"
   }
   ```
-
 
 ### Update a task
 
@@ -289,7 +292,6 @@ Creates a new task and stores it in a repository
   }
   ```
 
-
 #### URL: `/task`
 
 Creates a new task and stores it in a repository
@@ -360,7 +362,7 @@ Creates a new task and stores it in a repository
   **Content:**
   ```json
   {
-    "message": "Task deleted successfully",
+    "message": "Task deleted successfully"
   }
   ```
 
