@@ -1,0 +1,16 @@
+version: "3"
+services:
+  # tasks-backend:
+  #   container_name: "tasks-backend"
+  #   build: ./
+  #   ports:
+  #     - "8080:8080"
+  pg:
+    image: "postgres:12"
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg/db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgrestasks
