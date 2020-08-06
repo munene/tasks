@@ -1,6 +1,6 @@
 export const manifest = {
   server: {
-    port: process.env.PORT || 80,
+    port: process.env.PORT || 3000,
     router: {
       stripTrailingSlash: true,
     },
